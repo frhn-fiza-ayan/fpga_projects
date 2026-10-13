@@ -2,7 +2,7 @@
 `timescale 1ns / 1ps
 
 module uart_echo_board_b #(
-    parameter integer CLK_FREQ  = 125_000_000,
+    parameter integer CLK_FREQ = 125_000_000,
     parameter integer BAUD_RATE = 9600
 )(
     input  wire clk,
@@ -11,15 +11,15 @@ module uart_echo_board_b #(
     output wire uart_tx
 );
 
-    localparam [2:0] RX_WAIT       = 3'd0;
-    localparam [2:0] TX_WAIT_IDLE  = 3'd1;
-    localparam [2:0] TX_LAUNCH     = 3'd2;
-    localparam [2:0] TX_WAIT_START = 3'd3;
-    localparam [2:0] TX_WAIT_DONE  = 3'd4;
+    localparam [2:0] RX_WAIT       = 3'd0,
+                     TX_WAIT_IDLE = 3'd1,
+                     TX_LAUNCH    = 3'd2,
+                     TX_WAIT_START= 3'd3,
+                     TX_WAIT_DONE = 3'd4;
 
     reg [2:0] state;
-    reg [7:0] echo_data;
 
+    reg [7:0] echo_data;
     reg tx_wr_en;
     reg rx_rdy_clr;
 
@@ -40,7 +40,7 @@ module uart_echo_board_b #(
         .enb_rx(rx_enb)
     );
 
-    // Receive data from Board A
+    // UART receiver
     uart_reciever rx_unit (
         .clk(clk),
         .rst(rst),
@@ -51,7 +51,7 @@ module uart_echo_board_b #(
         .data_out(rx_data)
     );
 
-    // Transmit the received byte back to Board A
+    // UART transmitter
     uart_sender tx_unit (
         .clk(clk),
         .wr_en(tx_wr_en),
@@ -62,6 +62,7 @@ module uart_echo_board_b #(
         .tx_busy(tx_busy)
     );
 
+    // Receive a byte and transmit it back
     always @(posedge clk) begin
         if (rst) begin
             state      <= RX_WAIT;
@@ -73,7 +74,6 @@ module uart_echo_board_b #(
             rx_rdy_clr <= 1'b0;
 
             case (state)
-
                 RX_WAIT: begin
                     if (rx_rdy) begin
                         echo_data  <= rx_data;
@@ -102,10 +102,7 @@ module uart_echo_board_b #(
                         state <= RX_WAIT;
                 end
 
-                default: begin
-                    state <= RX_WAIT;
-                end
-
+                default: state <= RX_WAIT;
             endcase
         end
     end

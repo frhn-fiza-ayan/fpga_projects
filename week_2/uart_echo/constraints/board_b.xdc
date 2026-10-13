@@ -1,18 +1,19 @@
 
 ## =========================================================
-## Board B: UART Echo Responder
-## PYNQ-Z2 (Zynq-7000)
+## UART Echo Project - Board B
+## Board: PYNQ-Z2 (XC7Z020-CLG400-1)
+## Function: Receive and echo the byte
 ## =========================================================
 
-## 125 MHz system clock
+## 1. System clock: 125 MHz
 set_property -dict { PACKAGE_PIN H16 IOSTANDARD LVCMOS33 } [get_ports clk]
 create_clock -add -name sys_clk_pin -period 8.000 -waveform {0 4} [get_ports clk]
 
-## Reset input: PMOD JA pin 1
-set_property -dict { PACKAGE_PIN C17 IOSTANDARD LVCMOS33 } [get_ports rst]
+## 2. Reset button: BTN0
+set_property -dict { PACKAGE_PIN D19 IOSTANDARD LVCMOS33 } [get_ports rst]
 
-## UART RX: PMOD JA pin 2
-set_property -dict { PACKAGE_PIN D18 IOSTANDARD LVCMOS33 } [get_ports uart_rx]
-
-## UART TX: PMOD JA pin 3
-set_property -dict { PACKAGE_PIN E18 IOSTANDARD LVCMOS33 } [get_ports uart_tx]
+## 3. UART connections: PMOD JA
+## Board B RX uses package pin Y18
+## Board B TX uses package pin Y19
+set_property -dict { PACKAGE_PIN Y18 IOSTANDARD LVCMOS33 } [get_ports uart_rx]
+set_property -dict { PACKAGE_PIN Y19 IOSTANDARD LVCMOS33 } [get_ports uart_tx]
