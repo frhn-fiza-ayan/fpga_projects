@@ -16,10 +16,10 @@ set_property -dict { PACKAGE_PIN N16 IOSTANDARD LVCMOS33 } [get_ports {led[2]}]
 set_property -dict { PACKAGE_PIN M14 IOSTANDARD LVCMOS33 } [get_ports {led[3]}]
 
 ## SPI Chip Select input
-set_property -dict { PACKAGE_PIN T14 IOSTANDARD LVCMOS33 } [get_ports spi_cs]
+set_property -dict { PACKAGE_PIN W14 IOSTANDARD LVCMOS33 } [get_ports spi_cs]
 
 ## SPI Clock input
-set_property -dict { PACKAGE_PIN U12 IOSTANDARD LVCMOS33 } [get_ports spi_sclk]
+set_property -dict { PACKAGE_PIN Y14 IOSTANDARD LVCMOS33 } [get_ports spi_sclk]
 
 ## SPI Master Out, Slave In input
-set_property -dict { PACKAGE_PIN V12 IOSTANDARD LVCMOS33 } [get_ports spi_mosi]
+set_property -dict { PACKAGE_PIN T11 IOSTANDARD LVCMOS33 } [get_ports spi_mosi]
